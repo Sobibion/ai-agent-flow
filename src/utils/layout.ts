@@ -1,5 +1,5 @@
 import * as dagre from 'dagre'
-import type { Edge } from 'reactflow'
+import { Position, type Edge } from 'reactflow'
 import type { WorkflowNode } from '../types/workflow'
 
 type Direction = 'TB' | 'LR'
@@ -71,8 +71,8 @@ export function getLayoutedNodes(
         x: pos.x - width / 2,
         y: pos.y - height / 2,
       },
-      sourcePosition: isHorizontal ? 'right' : 'bottom',
-      targetPosition: isHorizontal ? 'left' : 'top',
+      sourcePosition: isHorizontal ? Position.Right : Position.Bottom,
+      targetPosition: isHorizontal ? Position.Left : Position.Top,
     }
-  })
+  }) as WorkflowNode[]
 }

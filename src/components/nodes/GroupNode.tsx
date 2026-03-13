@@ -1,12 +1,10 @@
-import { memo, useCallback, useRef, useEffect } from 'react'
-import { NodeResizeControl, NodeToolbar, type NodeProps } from 'reactflow'
+import { memo, useCallback, useRef } from 'react'
+import { NodeResizeControl, NodeToolbar, Position, type NodeProps } from 'reactflow'
 import { Trash2 } from 'lucide-react'
 import { useShallow } from 'zustand/react/shallow'
 import { useWorkflowStore } from '../../store/useWorkflowStore'
 import type { GroupNodeData } from '../../types/workflow'
 
-const DEFAULT_WIDTH = 400
-const DEFAULT_HEIGHT = 200
 const PLACEHOLDER = '📝 输入你的注释...'
 
 function GroupNodeComponent({ id, data, selected }: NodeProps<GroupNodeData>) {
@@ -35,7 +33,7 @@ function GroupNodeComponent({ id, data, selected }: NodeProps<GroupNodeData>) {
 
   return (
     <>
-      <NodeToolbar isVisible={selected} position="top">
+      <NodeToolbar isVisible={selected} position={Position.Top}>
         <div className="flex items-center gap-1 rounded-md border border-gray-200 bg-white p-1 shadow-md">
           <button
             type="button"

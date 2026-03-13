@@ -81,7 +81,7 @@ export interface CodeNodeData extends NodeRuntimeFields {
 }
 
 /** 注释/分组框节点：仅作视觉分组，无 Handle，可拖拽调整大小 */
-export interface GroupNodeData {
+export interface GroupNodeData extends NodeRuntimeFields {
   /** 左上角可编辑的标题/注释文案 */
   label?: string
 }

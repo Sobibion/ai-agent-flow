@@ -21,7 +21,7 @@ import { useWorkflowStore } from '../store/useWorkflowStore'
 import { nodeTypes } from './nodes'
 import { edgeTypes } from './edges'
 import { DRAG_TYPE } from './Sidebar'
-import type { NodeType } from '../types/workflow'
+import type { NodeType, WorkflowNode } from '../types/workflow'
 import { getDefaultNodeData } from '../utils/getDefaultNodeData'
 import { NODE_PALETTE_TEMPLATES } from '../config/nodePalette'
 
@@ -208,7 +208,7 @@ export function WorkflowCanvas() {
   useEffect(() => {
     if (!contextMenu) return
     const handleClickOutside = (e: MouseEvent) => {
-      if (contextMenuRef.current && !contextMenuRef.current.contains(e.target as Node)) {
+      if (contextMenuRef.current && !contextMenuRef.current.contains(e.target as HTMLElement)) {
         setContextMenu(null)
       }
     }
@@ -304,7 +304,7 @@ export function WorkflowCanvas() {
       if (type === 'groupNode') {
         node.style = { width: 400, height: 200, zIndex: -1 }
       }
-      addNode(node)
+      addNode(node as WorkflowNode)
     },
     [addNode]
   )
@@ -344,7 +344,7 @@ export function WorkflowCanvas() {
       if (type === 'groupNode') {
         node.style = { width: 400, height: 200, zIndex: -1 }
       }
-      addNode(node)
+      addNode(node as WorkflowNode)
       setContextMenu(null)
     },
     [contextMenu, addNode]
@@ -386,7 +386,7 @@ export function WorkflowCanvas() {
 
       const dragX = draggedNode.position.x
       const dragY = draggedNode.position.y
-      const dragW = (draggedNode.measured?.width as number) || 200
+      const dragW = ((draggedNode as Node & { measured?: { width?: number } }).measured?.width) || 200
       const dragCenterX = dragX + dragW / 2
 
       nodeInternals.forEach((targetInternal, targetId) => {
@@ -394,7 +394,7 @@ export function WorkflowCanvas() {
 
         const targetX = targetInternal.position.x
         const targetY = targetInternal.position.y
-        const targetW = (targetInternal.measured?.width as number) || 200
+        const targetW = ((targetInternal as Node & { measured?: { width?: number } }).measured?.width) || 200
         const targetCenterX = targetX + targetW / 2
 
         if (Math.abs(dragCenterX - targetCenterX) < snapThreshold) {
