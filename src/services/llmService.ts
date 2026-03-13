@@ -9,7 +9,11 @@ const env = typeof import.meta !== 'undefined' && import.meta.env
   ? (import.meta.env as Record<string, string | undefined>)
   : {}
 
-/** 代理后端根地址，开发时可为空（由 Vite 代理 /api）；生产可配置 VITE_API_BASE */
+/**
+ * 代理后端根地址。
+ * 开发：空字符串时由 Vite 代理 /api；可配置 VITE_API_BASE 指向本地代理。
+ * 生产：空字符串时使用相对路径 /api/chat，由 Vercel Edge Function 处理。
+ */
 function getProxyBase(): string {
   const base = (env.VITE_API_BASE as string) || ''
   return base.replace(/\/$/, '')
